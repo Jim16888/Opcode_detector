@@ -12,7 +12,7 @@
     
     - Input:a binary file
     
-    - output:the label predicted by Machine Learning model
+    - output:the probability of each class which is predicted by Machine method
     
 ### Feature Extraction
 
@@ -38,25 +38,33 @@
 * MD_model : the models are responsible for classify the malware or benignware (saved by joblib)
 * TestingBin : the file that can test this detector
 * main.py : the detector
-* parser.py : for parsing args
+* utils.py : for parsing args
 * top_feature_1.npy : save the training data about vectorize the opcode sequence
 
 ## Usage
-* setting path of input file
-> python main.py --input-path [FILE_PATH]
-
-* select the model
-> python main.py --model [MODEL]
+* input binary: `-i <path>`, `--input-path <path>`
+* model: `-m <model>`, `--model <model>`
+  * xgboost, SVM
+* output (record): `-o <path>`, `--output-path <path>`
+* Malware Detection / Family Classification
+    * do nothing if you wanna do malware detection(binary clf)  
+    * add `-c` if you wanna do family classification 
+* e.g.
+    `python main.py -i TestingBin/malware/00a2bd396600e892da75c686be60d5d13e5a34824afd76c02e8cf7257d2cf5c5 -o myDetector_FC_records.csv -m xgboost -c`
+    * using trained rf family classifier(`-c`), predict '00a2bd396600e892da75c686be60d5d13e5a34824afd76c02e8cf7257d2cf5c5' and write the result to 'myDetector_FC_records.csv'
+    * add `-W ignore` if you keep getting bothered by warning msg
 
 MODEL can be xgboost, SVM  default: xgboost
 
-* if you wanna do malware family classification
-> python main.py --MDorFC FC
+* output file format
 
-* e.g.
-> python main.py --input-path ./TestingBin/malware/00a2bd396600e892da75c686be60d5d13e5a34824afd76c02e8cf7257d2cf5c5 --model svm --MDorFC FC
-
-
+  |    Filename  | Benignware | Malware |
+  | :----------: | :------: | :-------: |
+  | 00ffe391     |   0.97   |   0.03    |
+  |     00f391fe      |  0.967   |  165.51   |
+  |     1fe00f39      |  -1   |    |
+  * it will record the prob of each class
+  * -1 means fail
 
 ### Accuracy
 * classification
