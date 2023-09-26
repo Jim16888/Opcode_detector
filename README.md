@@ -61,7 +61,7 @@ MODEL can be xgboost, SVM  default: xgboost
   |    Filename  | Benignware | Malware |
   | :----------: | :------: | :-------: |
   | 00ffe391     |   0.97   |   0.03    |
-  |     00f391fe      |  0.967   |  165.51   |
+  |     00f391fe      |  0.967   |  0.033   |
   |     1fe00f39      |  -1   |    |
   * it will record the prob of each class
   * -1 means fail
